@@ -1,6 +1,7 @@
 <template>
+  <AddRecords />
   <div class="Personalinfo">
-      <h2>{{ patient.firstname }}  {{ patient.lastname }}</h2>
+    <h2>{{ patient.firstname }} {{ patient.lastname }}</h2>
   </div>
   <div class="PersonalRecords">
     <div class="search"></div>
@@ -17,6 +18,7 @@
 import { useRoute } from 'vue-router'
 import { usePatientRecord } from '@/stores/patientRecord'
 import { usePatientStore } from '@/stores/patientsStore'
+import AddRecords from './AddRecords.vue'
 import { computed } from 'vue'
 
 const route = useRoute()
@@ -26,11 +28,11 @@ const patientRecord = usePatientRecord()
 const patientId = Number(route.params.id)
 
 const patient = computed(() => {
- return patientsStore.patients.find(p => p.id === patientId)
+  return patientsStore.patients.find(p => p.id === patientId)
 })
 
 const records = computed(() => {
- return patientRecord.getpatient(patientId)
+  return patientRecord.getpatient(patientId)
 })
 </script>
 
