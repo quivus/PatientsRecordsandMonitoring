@@ -1,18 +1,15 @@
 <template>
   <div class="sidebar">
     <!-- <SidebarComponent /> -->
+    <AddPatient />
   </div>
   <div class="main">
     <div class="search">
       <input type="text" v-model="store.searchterm" placeholder="Patient Name..." />
     </div>
     <div class="content">
-      <div
-        class="patients"
-        v-for="patient in store.filteredpatients"
-        :key="patient.id"
-        @click="patientsrecord(patient.id)"
-      >
+      <div class="patients" v-for="patient in store.filteredpatients" :key="patient.id"
+        @click="patientsrecord(patient.id)">
         <p class="firstname">{{ patient.firstname }}</p>
         <p class="middlename">{{ patient.middlename }}</p>
         <p class="lastname">{{ patient.lastname }}</p>
@@ -27,6 +24,7 @@
 import { useRouter } from 'vue-router'
 import { usePatientStore } from '@/stores/patientsStore'
 import SidebarComponent from '@/components/SidebarComponent.vue'
+import AddPatient from '@/modals/addPatient.vue'
 
 const store = usePatientStore()
 const router = useRouter()
