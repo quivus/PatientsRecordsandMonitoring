@@ -14,7 +14,6 @@ export const usePatientStore = defineStore('patientStore', () => {
             firstname: 'Arcgel',
             middlename: 'Bataluna',
             lastname: 'Chavez',
-            contactnumber: '09165995755',
             address: 'Tugas Gun-ob Lapu Lapu City',
             password: 'chavezpassword',
             facebook: 'facebook.com/arcgel',
@@ -26,7 +25,6 @@ export const usePatientStore = defineStore('patientStore', () => {
             firstname: 'Rajie Mae',
             middlename: '',
             lastname: ' Villa',
-            contactnumber: '09165995755',
             address: 'Ibabao Lapu Lapu City',
             password: 'villapassword',
             facebook: '',
@@ -38,7 +36,6 @@ export const usePatientStore = defineStore('patientStore', () => {
             firstname: 'Raizza Mae',
             middlename: '',
             lastname: 'Empeno',
-            contactnumber: '09165995755',
             address: 'Kagudoy Lapu Lapu City',
             password: 'empenopassword',
             facebook: '',
@@ -47,6 +44,36 @@ export const usePatientStore = defineStore('patientStore', () => {
           },
         ],
   )
+
+  const formPatient = ref({
+    id: null,
+    firstname: '',
+    middlename: '',
+    lastname: '',
+    password: '',
+    facebook: '',
+    email: '',
+    emergencyContact: '',
+  })
+
+  const resetForm = () => {
+    formPatient.value = {
+      id: null,
+      firstname: '',
+      middlename: '',
+      lastname: '',
+      password: '',
+      facebook: '',
+      email: '',
+      emergencyContact: '',
+    }
+  }
+
+  const isEditMode = computed(() => !!formPatient.value.id)
+
+  const setFormforEdit = (patient) => {
+    formPatient.value = { ...patient }
+  }
 
   watch(
     patients,
@@ -70,5 +97,94 @@ export const usePatientStore = defineStore('patientStore', () => {
     patients.value.push(patient)
   }
 
-  return { searchterm, patients, filteredpatients, addPatient }
+  const existingPatientDetails = (newPatient) => {
+    const patientExist = patients.value.some(
+      (p) =>
+        p.firstname === newPatient.firstname &&
+        p.lastname === newPatient.lastname &&
+        p.middlename === newPatient.middlename,
+    )
+    if (patientExist) {
+      console.error(
+        `Patient ${newPatient.firstname} ${newPatient.middlename} ${newPatient.lastname} already exist`,
+      )
+      return false
+    }
+    return true
+  }
+
+  const deletePatient = (patientId) => {
+    patients.value = patients.value.filter((patient) => patient.id !== patientId)
+    console.log(`Patient with ID ${patientUD} has been deleted`)
+  }
+
+  const editPatient = (patientId, updatedPatient) => {
+    const index = patients.value.findIndex((patient) => patient.id === patientId)
+    if (index !== -1) {
+      patients.value[index] = { ...updatedPatient, id: patientId }
+      console.log(`patient with ID ${patientId} has been updated`)
+    } else {
+      console.error(`Patient with ID ${patientId} not found`)
+    }
+  }
+
+  const submitPatient = () => {
+    if (isEditMode.value) {
+      editPatient(formPatient.value.id, formPatient.value)
+    } else {
+      const isPatientValid = patientVerification(formPatient.value)
+      if (isPatientValid) {
+        addPatient(formPatient.value)
+      } else {
+        return false
+      }
+    }
+    resetForm()
+    return true
+  }
+
+  const emailVerification = (newPatient) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    const emailExist = patients.value.some((p) => p.email === newPatient.email)
+    if (emailExist) {
+      console.error(`Patient ${newPatient.email} is already in used`)
+      return false
+    }
+    if (!emailRegex.test(newPatient.email)) {
+      console.error(`Patient Email ${newPatient.email} is not a valid format`)
+      return false
+    }
+    return true
+  }
+
+  const phoneVerification = (newPatient) => {
+    const phoneNumber = String(newPatient.emergencyContact)
+    if (phoneNumber.length !== 11) {
+      console.error(
+        `Patient phone number: ${newPatient.emergencyContact} should be 11 characters long`,
+      )
+      return false
+    }
+    return true
+  }
+
+  const patientVerification = (newPatient) => {
+    return (
+      existingPatientDetails(newPatient) &&
+      emailVerification(newPatient) &&
+      phoneVerification(newPatient)
+    )
+  }
+
+  return {
+    searchterm,
+    patients,
+    filteredpatients,
+    formPatient,
+    isEditMode,
+    deletePatient,
+    setFormforEdit,
+    submitPatient,
+    resetForm,
+  }
 })
