@@ -115,7 +115,7 @@ export const usePatientStore = defineStore('patientStore', () => {
 
   const deletePatient = (patientId) => {
     patients.value = patients.value.filter((patient) => patient.id !== patientId)
-    console.log(`Patient with ID ${patientUD} has been deleted`)
+    console.log(`Patient with ID ${patientId} has been deleted`)
   }
 
   const editPatient = (patientId, updatedPatient) => {
