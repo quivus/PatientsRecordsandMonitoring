@@ -37,11 +37,11 @@ const patientsrecord = (id) => {
 }
 
 const handleEdit = (patient) => {
-  store.setFormforEdit(patient);
+  store.setFormforEdit(patient)
 }
 
 const handleDelete = (id) => {
-  store.deletePatient(id);
+  store.deletePatient(id)
 }
 </script>
 
