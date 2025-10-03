@@ -31,7 +31,7 @@ const patientRecord = usePatientRecord()
 const patientId = Number(route.params.id)
 
 const patient = computed(() => {
-  return patientsStore.patients.find(p => p.id === patientId)
+  return patientsStore.patients.find((p) => p.id === patientId)
 })
 
 const records = computed(() => {
