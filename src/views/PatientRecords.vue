@@ -11,7 +11,7 @@
         <h3>{{ record.treatment }}</h3>
         <p>{{ record.notes }}</p>
         <button @click="handleEdit(record)">Edit</button>
-        <button @click="handleDelete(record.recordId)">Delete</button>
+        <button @click="handleDelete(record.id)">Delete</button>
       </div>
     </div>
   </div>
@@ -42,7 +42,7 @@ const handleEdit = (record) => {
   patientRecord.setFormforEdit(record)
 }
 
-const handleDelete = (recordId) => {
-  patientRecord.deleteRecord(recordId)
+const handleDelete = (id) => {
+  patientRecord.deleteRecord(id)
 }
 </script>
