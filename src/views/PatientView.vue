@@ -7,6 +7,9 @@
     <div class="search">
       <input type="text" v-model="store.searchterm" placeholder="Patient Name..." />
     </div>
+    <div class="logout">
+      <button @click="logout">Logout</button>
+    </div>
     <div class="content">
       <div class="patients" v-for="patient in store.filteredpatients">
         <div :key="patient.id" @click="patientsrecord(patient.id)">
@@ -26,10 +29,12 @@
 <script setup>
 import { useRouter } from 'vue-router'
 import { usePatientStore } from '@/stores/patientsStore'
+import { useAuthStore } from '@/stores/authStore'
 import SidebarComponent from '@/components/SidebarComponent.vue'
 import PatientHandler from '@/modals/PatientHandler.vue'
 
 const store = usePatientStore()
+const auth = useAuthStore()
 const router = useRouter()
 
 const patientsrecord = (id) => {
@@ -42,6 +47,11 @@ const handleEdit = (patient) => {
 
 const handleDelete = (id) => {
   store.deletePatient(id)
+}
+
+const logout = () => {
+  auth.logout()
+  router.push({ name: 'login' })
 }
 </script>
 
