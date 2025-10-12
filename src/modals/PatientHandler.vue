@@ -27,6 +27,15 @@
       required
     />
 
+    <label for="patientAddress">Address: </label>
+    <input
+      type="address"
+      v-model="store.formPatient.address"
+      id="patientAddress"
+      autocomplete="off"
+      required
+    />
+
     <label for="patientPassword">Password: </label>
     <input
       type="password"
