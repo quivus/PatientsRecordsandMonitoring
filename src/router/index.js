@@ -11,33 +11,43 @@ const router = createRouter({
       path: '/',
       name: 'home',
       component: Patientview,
-      // meta: { requiresAuth: true }
+      meta: { requiresAuth: true } // Requires authentication
     },
     {
       path: '/patientrecords/:id',
       name: 'patientrecords',
       component: PatientRecords,
-      // meta: { requiresAuth: true }
+      meta: { requiresAuth: true } // Requires authentication
     },
     {
       path: '/login',
       name: 'login',
-      component: LoginView
+      component: LoginView,
     },
   ],
 })
 
+// Global Navigation Guard
 router.beforeEach((to, from, next) => {
   const authStore = useAuthStore()
-  if(to.meta.requiresAuth) {
-    if(authStore.isAutheticated){
-      next()
-    } else {
-      next('/login')
-    }
-  } else{
-    next()
+  const isAuthenticated = authStore.isAutheticated
+  
+  // 1. If the route requires authentication AND the user is NOT authenticated, redirect to login.
+  if (to.meta.requiresAuth && !isAuthenticated) {
+    // Redirect to login page
+    next({ name: 'login' })
+    return
   }
+  
+  // 2. If the user is authenticated AND they are trying to go to the login page, redirect to home ('/').
+  if (to.name === 'login' && isAuthenticated) {
+    // Redirect to the home page (Patientview)
+    next({ name: 'home' })
+    return
+  }
+
+  // 3. Otherwise, proceed to the route
+  next()
 })
 
 export default router
