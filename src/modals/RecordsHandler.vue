@@ -1,13 +1,24 @@
 <template>
-  <div class="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4 font-poppins">
+  <div class="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4 font-poppins" @click.self="closeModal">
     <div class="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-auto border border-gray-100">
       <div class="sticky top-0 bg-white border-b border-gray-100 p-6 rounded-t-2xl z-10">
-        <h2 class="text-2xl font-bold bg-gradient-to-r from-[#2933FF] to-[#FF5451] bg-clip-text text-transparent">
-          {{ patientRecordStore.isEditMode ? 'Update Medical Record' : 'Add New Medical Record' }}
-        </h2>
-        <p class="text-sm text-gray-500 mt-1">
-          {{ patientRecordStore.isEditMode ? 'Edit the patient record details below' : 'Fill in the patient record information' }}
-        </p>
+        <div class="flex items-center justify-between">
+          <div>
+            <h2 class="text-2xl font-bold bg-gradient-to-r from-[#2933FF] to-[#FF5451] bg-clip-text text-transparent">
+              {{ patientRecordStore.isEditMode ? 'Update Medical Record' : 'Add New Medical Record' }}
+            </h2>
+            <p class="text-sm text-gray-500 mt-1">
+              {{ patientRecordStore.isEditMode ? 'Edit the patient record details below' : 'Fill in the patient record information' }}
+            </p>
+          </div>
+          <button
+            @click="closeModal"
+            class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition-all hover:scale-110 active:scale-95"
+            title="Close"
+          >
+            <i class="fa-solid fa-xmark text-gray-600"></i>
+          </button>
+        </div>
       </div>
 
       <form @submit.prevent="submitHandler" class="p-6 space-y-6">
@@ -37,7 +48,7 @@
           </label>
           <textarea
             name="diagnosis"
-            id="diaganosis"
+            id="diagnosis"
             v-model="patientRecordStore.recordForm.diagnosis"
             rows="3"
             placeholder="Enter the diagnosis..."
@@ -81,8 +92,7 @@
 
         <div class="flex justify-end gap-3 pt-4 border-t border-gray-100">
           <button 
-            v-if="patientRecordStore.isEditMode" 
-            @click="patientRecordStore.resetRecordForm()"
+            @click="closeModal"
             type="button"
             class="px-6 py-3 bg-gray-100 text-gray-700 text-sm font-semibold rounded-xl transition-all hover:bg-gray-200 hover:shadow-md active:scale-95"
           >
@@ -103,22 +113,32 @@
 </template>
 
 <script setup>
-import { onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { usePatientRecord } from '@/stores/patientRecord'
 
 const patientRecordStore = usePatientRecord()
 const route = useRoute()
 
-const submitHandler = () => {
-  patientRecordStore.recordForm.patientId = String(route.params.id)
-  patientRecordStore.recordForm.date = new Date().toISOString().split('T')[0]
-  patientRecordStore.submitRecord()
+const emit = defineEmits(['modalClose'])
+
+const closeModal = () => {
+  emit('modalClose')
 }
 
-onMounted(() => {
-  patientRecordStore.resetRecordForm()
-})
+const submitHandler = async () => {
+  patientRecordStore.recordForm.patientId = String(route.params.id)
+  
+  // Only set date if adding a new record (not in edit mode)
+  if (!patientRecordStore.isEditMode) {
+    patientRecordStore.recordForm.date = new Date().toISOString().split('T')[0]
+  }
+  
+  const success = await patientRecordStore.submitRecord()
+  
+  if (success) {
+    closeModal()
+  }
+}
 </script>
 
 <style scoped>
