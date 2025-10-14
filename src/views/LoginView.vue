@@ -90,12 +90,16 @@
 </template>
 
 <script setup>
+import router from '@/router'
 import { useAuthStore } from '@/stores/authStore'
 
 const auth = useAuthStore()
 
-const submitHandler = () => {
-  auth.login()
+const submitHandler = async () => {
+  const success = await auth.login()
+  if (success) {
+    router.push({ name: 'home' })
+  }
 }
 </script>
 

@@ -5,13 +5,6 @@ export const useAuthStore = defineStore('authStore', () => {
   const storedNurse = localStorage.getItem('nurse')
   const nurse = ref(storedNurse ? JSON.parse(storedNurse) : null)
 
-  const mockNurse = ref({
-    id: 1,
-    username: 'aclcnurse',
-    password: 'aclcnurse123',
-    email: 'aclcnurse@gmail.com',
-  })
-
   const formLogin = ref({
     username: '',
     password: '',
@@ -27,15 +20,33 @@ export const useAuthStore = defineStore('authStore', () => {
   const isAutheticated = computed(() => !!nurse.value)
 
   const login = async () => {
-    if (
-      formLogin.value.username === mockNurse.value.username &&
-      formLogin.value.password === mockNurse.value.password
-    ) {
-      localStorage.setItem('nurse', JSON.stringify(mockNurse))
-      console.log(`Successfully Logged`)
-      return true
-    } else {
-      console.error(`Failed Logged`)
+    try {
+      const response = await fetch('http://localhost:3000/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formLogin.value),
+      })
+
+      const data = await response.json().catch((e) => {
+        console.error('Failed to parse JSON response:', e);
+        return { success: false, message: 'Received non-JSON response from server.' };
+      });
+
+      if (data.success) {
+        nurse.value = data.nurse
+        localStorage.setItem('nurse', JSON.stringify(nurse.value))
+        console.log(`Logged In as ${data.nurse.username}`)
+        resetFormLogin()
+        return true
+      } else {
+        console.error('Login failed:', data.message)
+        resetFormLogin()
+        return false
+      }
+    } catch (error) {
+      console.error('Error during login:', error)
       resetFormLogin()
       return false
     }

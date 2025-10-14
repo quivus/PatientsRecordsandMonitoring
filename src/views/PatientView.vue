@@ -80,6 +80,7 @@ import { usePatientStore } from '@/stores/patientsStore'
 import PatientHandler from '@/modals/PatientHandler.vue'
 
 const store = usePatientStore()
+const auth = useAuthStore()
 const router = useRouter()
 
 const patientsrecord = (id) => {
@@ -92,6 +93,11 @@ const handleEdit = (patient) => {
 
 const handleDelete = (id) => {
   store.deletePatient(id)
+}
+
+const logout = () => {
+  auth.logout()
+  router.push({ name: 'login' })
 }
 </script>
 
