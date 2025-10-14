@@ -77,6 +77,7 @@
 <script setup>
 import { useRouter } from 'vue-router'
 import { usePatientStore } from '@/stores/patientsStore'
+import { useAuthStore } from '@/stores/authStore'
 import PatientHandler from '@/modals/PatientHandler.vue'
 
 const store = usePatientStore()
