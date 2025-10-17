@@ -27,7 +27,7 @@ export const usePatientStore = defineStore('patientStore', () => {
     password: '',
     facebook: '',
     email: '',
-    emergencyContact: '',
+    emergencyContact: ''.toString(),
   })
 
   const resetForm = () => {
@@ -40,7 +40,7 @@ export const usePatientStore = defineStore('patientStore', () => {
       password: '',
       facebook: '',
       email: '',
-      emergencyContact: '',
+      emergencyContact: "",
     }
   }
 
