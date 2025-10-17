@@ -26,6 +26,11 @@
 
       </div>
 
+          <button
+      @click="appointments()"
+      class="absolute top-6 right-32 px-4 py-2 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700 transition"
+    > Appointment </button>
+
       <div class="content grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         <div
           v-for="patient in store.filteredpatients"
@@ -86,6 +91,10 @@ const router = useRouter()
 
 const patientsrecord = (id) => {
   router.push({ name: 'patientrecords', params: { id } })
+}
+
+const appointments = (id) => {
+  router.push({ name: 'appointments' })
 }
 
 const handleEdit = (patient) => {
