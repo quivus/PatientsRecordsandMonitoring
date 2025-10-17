@@ -48,7 +48,7 @@ server.use(router);
 const PORT = 3000;
 server.listen(PORT, () => {
     console.log(`JSON Server is running at http://localhost:${PORT}`);
-    console.log('Endpoints: /nurse, /patients, /patientRecords');
+    console.log('Endpoints: /nurse, /patients, /patientRecords. /appointments');
     console.log('Custom Login: POST /login');
 });
 
