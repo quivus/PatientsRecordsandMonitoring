@@ -22,7 +22,6 @@ export const usePatientRecord = defineStore('patientRecord', () => {
 
   fetchRecords()
 
-
   // Re-introduced 'recordId' as the human-readable ID
   const recordForm = ref({
     id: null, // Server's auto-increment ID (internal)
@@ -63,38 +62,41 @@ export const usePatientRecord = defineStore('patientRecord', () => {
 
   // Helper to generate the next sequential ID (R-001, R-002, etc.)
   const getNextRecordId = () => {
-    const records = patientRecords.value;
+    const records = patientRecords.value
     if (records.length === 0) {
-        return 'R-001';
+      return 'R-001'
     }
-    
+
     // Find the highest number used in existing recordIds
     const maxNum = records.reduce((max, record) => {
-        if (record.recordId && typeof record.recordId === 'string' && record.recordId.startsWith('R-')) {
-            const num = parseInt(record.recordId.substring(2), 10);
-            return num > max ? num : max;
-        }
-        return max;
-    }, 0);
+      if (
+        record.recordId &&
+        typeof record.recordId === 'string' &&
+        record.recordId.startsWith('R-')
+      ) {
+        const num = parseInt(record.recordId.substring(2), 10)
+        return num > max ? num : max
+      }
+      return max
+    }, 0)
 
-    const nextNum = maxNum + 1;
+    const nextNum = maxNum + 1
     // Format as R-padded number
-    return 'R-' + nextNum.toString().padStart(3, '0');
+    return 'R-' + nextNum.toString().padStart(3, '0')
   }
-
 
   // --- CRUD: Add Record ---
   const addRecord = async (newRecord) => {
     const recordToPost = { ...newRecord }
-    
+
     // 1. Generate the human-readable ID if it's a new record
     if (!recordToPost.recordId) {
-      recordToPost.recordId = getNextRecordId();
+      recordToPost.recordId = getNextRecordId()
     }
-    
+
     // 2. Remove the 'id' field to allow the server (json-server) to auto-generate it.
     // This is crucial for POST requests.
-    delete recordToPost.id 
+    delete recordToPost.id
 
     try {
       const response = await fetch(`${API_BASE_URL}/patientRecords`, {
@@ -102,20 +104,22 @@ export const usePatientRecord = defineStore('patientRecord', () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(recordToPost),
       })
-      
+
       // Check the response status explicitly for a non-success code
       if (!response.ok) {
-          const errorText = await response.text();
-          console.error('Server response error:', errorText);
-          throw new Error('Failed to add record');
+        const errorText = await response.text()
+        console.error('Server response error:', errorText)
+        throw new Error('Failed to add record')
       }
-      
+
       const addedRecord = await response.json()
-      
+
       // Add the server-generated record (which now correctly has both 'id' and 'recordId')
       patientRecords.value.push(addedRecord)
 
-      console.log(`Record ${addedRecord.recordId} for patient ${newRecord.patientId} added successfully.`)
+      console.log(
+        `Record ${addedRecord.recordId} for patient ${newRecord.patientId} added successfully.`,
+      )
       return true
     } catch (error) {
       console.error('Error adding record:', error)
@@ -125,12 +129,12 @@ export const usePatientRecord = defineStore('patientRecord', () => {
 
   // --- CRUD: Edit Record ---
   const editRecord = async (id, updatedRecord) => {
-    const serverId = id; // The id passed is the server's primary key
+    const serverId = id // The id passed is the server's primary key
 
-    const recordToPut = { ...updatedRecord };
+    const recordToPut = { ...updatedRecord }
     // Remove the 'id' property from the request body for safety
-    delete recordToPut.id;
-    
+    delete recordToPut.id
+
     try {
       // Use the server ID for the endpoint
       const response = await fetch(`${API_BASE_URL}/patientRecords/${serverId}`, {
@@ -157,7 +161,7 @@ export const usePatientRecord = defineStore('patientRecord', () => {
 
   // --- CRUD: Delete Record ---
   const deleteRecord = async (id) => {
-    const serverId = id; // The id passed is the server's primary key
+    const serverId = id // The id passed is the server's primary key
 
     try {
       const response = await fetch(`${API_BASE_URL}/patientRecords/${serverId}`, {
@@ -174,7 +178,6 @@ export const usePatientRecord = defineStore('patientRecord', () => {
       return false
     }
   }
-
 
   const submitRecord = async () => {
     let success = false
@@ -199,7 +202,7 @@ export const usePatientRecord = defineStore('patientRecord', () => {
     setFormforEdit,
     getpatient,
     deleteRecord,
-    submitRecord, 
+    submitRecord,
     fetchRecords,
   }
 })

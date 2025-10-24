@@ -1,10 +1,14 @@
 <template>
-  <div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 via-blue-50/30 to-red-50/20 font-poppins p-4">
+  <div
+    class="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 via-blue-50/30 to-red-50/20 font-poppins p-4"
+  >
     <div class="w-full max-w-md">
       <!-- Logo and Title Section -->
       <div class="text-center mb-10 animate-fade-in">
         <div class="gradient-logo w-32 h-32 mx-auto mb-6 drop-shadow-2xl animate-float"></div>
-        <h1 class="text-5xl font-black tracking-tight mb-2 bg-gradient-to-r from-[#2933FF] to-[#FF5451] bg-clip-text text-transparent animate-slide-down">
+        <h1
+          class="text-5xl font-black tracking-tight mb-2 bg-gradient-to-r from-[#2933FF] to-[#FF5451] bg-clip-text text-transparent animate-slide-down"
+        >
           ACLC CLINIC
         </h1>
         <p class="text-gray-500 text-sm font-medium animate-slide-up">
@@ -73,7 +77,9 @@
         <!-- Additional Info -->
         <div class="mt-6 pt-6 border-t border-gray-100">
           <p class="text-center text-xs text-gray-500">
-            <i class="fa-solid fa-shield-halved mr-1 bg-gradient-to-r from-[#2933FF] to-[#FF5451] bg-clip-text text-transparent"></i>
+            <i
+              class="fa-solid fa-shield-halved mr-1 bg-gradient-to-r from-[#2933FF] to-[#FF5451] bg-clip-text text-transparent"
+            ></i>
             Secure login protected by encryption
           </p>
         </div>
@@ -81,9 +87,7 @@
 
       <!-- Footer -->
       <div class="text-center mt-8 animate-fade-in-delayed">
-        <p class="text-sm text-gray-500">
-          © 2024 ACLC Clinic. All rights reserved.
-        </p>
+        <p class="text-sm text-gray-500">© 2024 ACLC Clinic. All rights reserved.</p>
       </div>
     </div>
   </div>
@@ -107,9 +111,9 @@ const submitHandler = async () => {
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;900&display=swap');
 
 .gradient-logo {
-  mask: url("../../images/ACLC.svg") center / contain no-repeat;
-  -webkit-mask: url("../../images/ACLC.svg") center / contain no-repeat;
-  background: linear-gradient(135deg, #2933FF, #FF5451, #8B5CF6);
+  mask: url('../../images/ACLC.svg') center / contain no-repeat;
+  -webkit-mask: url('../../images/ACLC.svg') center / contain no-repeat;
+  background: linear-gradient(135deg, #2933ff, #ff5451, #8b5cf6);
   background-size: 200% 200%;
   width: 8rem;
   height: 8rem;
@@ -131,7 +135,8 @@ const submitHandler = async () => {
 }
 
 @keyframes float {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0);
   }
   50% {
@@ -206,7 +211,7 @@ const submitHandler = async () => {
 }
 
 .gradient-border-focus:focus {
-  border-image: linear-gradient(135deg, #2933FF, #FF5451) 1;
+  border-image: linear-gradient(135deg, #2933ff, #ff5451) 1;
   border-width: 2px;
   border-style: solid;
 }

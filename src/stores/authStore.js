@@ -30,9 +30,9 @@ export const useAuthStore = defineStore('authStore', () => {
       })
 
       const data = await response.json().catch((e) => {
-        console.error('Failed to parse JSON response:', e);
-        return { success: false, message: 'Received non-JSON response from server.' };
-      });
+        console.error('Failed to parse JSON response:', e)
+        return { success: false, message: 'Received non-JSON response from server.' }
+      })
 
       if (data.success) {
         nurse.value = data.nurse

@@ -40,7 +40,7 @@ export const usePatientStore = defineStore('patientStore', () => {
       password: '',
       facebook: '',
       email: '',
-      emergencyContact: "",
+      emergencyContact: '',
     }
   }
 
@@ -136,9 +136,11 @@ export const usePatientStore = defineStore('patientStore', () => {
   }
 
   const submitPatient = async () => {
-    if (!emailVerification(formPatient.value) ||
-        !phoneVerification(formPatient.value) ||
-        !existingPatientDetails(formPatient.value)) {
+    if (
+      !emailVerification(formPatient.value) ||
+      !phoneVerification(formPatient.value) ||
+      !existingPatientDetails(formPatient.value)
+    ) {
       return false
     }
 
@@ -152,13 +154,13 @@ export const usePatientStore = defineStore('patientStore', () => {
     return success
   }
 
-   const emailVerification = (patient) => {
+  const emailVerification = (patient) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-    
-    if (isEditMode.value) return true 
-    
+
+    if (isEditMode.value) return true
+
     const emailExist = patients.value.some((p) => p.email === patient.email)
-    
+
     if (patient.email && emailExist) {
       console.error(`Patient email ${patient.email} is already in use`)
       return false

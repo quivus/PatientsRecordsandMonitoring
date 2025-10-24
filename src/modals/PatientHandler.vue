@@ -7,7 +7,7 @@
       autocomplete="off"
       required
       class="w-full px-3 py-2 rounded-[5px] border-2 text-gray-900 transition"
-      style="border-image: linear-gradient(135deg, #2933FF, #FF5451) 1; border-style: solid;"
+      style="border-image: linear-gradient(135deg, #2933ff, #ff5451) 1; border-style: solid"
     />
 
     <input
@@ -17,7 +17,7 @@
       autocomplete="off"
       required
       class="w-full px-3 py-2 rounded-[5px] border-2 text-gray-900 transition"
-      style="border-image: linear-gradient(135deg, #2933FF, #FF5451) 1; border-style: solid;"
+      style="border-image: linear-gradient(135deg, #2933ff, #ff5451) 1; border-style: solid"
     />
 
     <input
@@ -27,7 +27,7 @@
       autocomplete="off"
       required
       class="w-full px-3 py-2 rounded-[5px] border-2 text-gray-900 transition"
-      style="border-image: linear-gradient(135deg, #2933FF, #FF5451) 1; border-style: solid;"
+      style="border-image: linear-gradient(135deg, #2933ff, #ff5451) 1; border-style: solid"
     />
 
     <input
@@ -36,7 +36,7 @@
       placeholder="Password"
       autocomplete="off"
       class="w-full px-3 py-2 rounded-[5px] border-2 text-gray-900 transition"
-      style="border-image: linear-gradient(135deg, #2933FF, #FF5451) 1; border-style: solid;"
+      style="border-image: linear-gradient(135deg, #2933ff, #ff5451) 1; border-style: solid"
     />
 
     <input
@@ -45,7 +45,7 @@
       placeholder="Facebook"
       autocomplete="off"
       class="w-full px-3 py-2 rounded-[5px] border-2 text-gray-900 transition"
-      style="border-image: linear-gradient(135deg, #2933FF, #FF5451) 1; border-style: solid;"
+      style="border-image: linear-gradient(135deg, #2933ff, #ff5451) 1; border-style: solid"
     />
 
     <input
@@ -55,7 +55,7 @@
       autocomplete="off"
       required
       class="w-full px-3 py-2 rounded-[5px] border-2 text-gray-900 transition"
-      style="border-image: linear-gradient(135deg, #2933FF, #FF5451) 1; border-style: solid;"
+      style="border-image: linear-gradient(135deg, #2933ff, #ff5451) 1; border-style: solid"
     />
 
     <input
@@ -65,7 +65,7 @@
       autocomplete="off"
       required
       class="w-full px-3 py-2 rounded-[5px] border-2 text-gray-900 transition"
-      style="border-image: linear-gradient(135deg, #2933FF, #FF5451) 1; border-style: solid;"
+      style="border-image: linear-gradient(135deg, #2933ff, #ff5451) 1; border-style: solid"
     />
 
     <div class="flex gap-3 mt-4">

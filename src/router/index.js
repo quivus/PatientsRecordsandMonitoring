@@ -12,19 +12,19 @@ const router = createRouter({
       path: '/',
       name: 'home',
       component: Patientview,
-      meta: { requiresAuth: true }
+      meta: { requiresAuth: true },
     },
     {
       path: '/patientrecords/:id',
       name: 'patientrecords',
       component: PatientRecords,
-      meta: { requiresAuth: true }
+      meta: { requiresAuth: true },
     },
     {
       path: '/appointments',
       name: 'appointments',
       component: AppointmentView,
-      meta: { requiresAuth: true }
+      meta: { requiresAuth: true },
     },
     {
       path: '/login',
@@ -34,17 +34,15 @@ const router = createRouter({
   ],
 })
 
-
 router.beforeEach((to, from, next) => {
   const authStore = useAuthStore()
   const isAuthenticated = authStore.isAutheticated
-  
-  if (to.meta.requiresAuth && !isAuthenticated) {
 
+  if (to.meta.requiresAuth && !isAuthenticated) {
     next({ name: 'login' })
     return
   }
-  
+
   if (to.name === 'login' && isAuthenticated) {
     next({ name: 'home' })
     return
